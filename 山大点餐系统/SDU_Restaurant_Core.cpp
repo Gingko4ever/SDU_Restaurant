@@ -78,7 +78,7 @@ void SDU_Restaurant_Console_Init(void)
     //获取当前窗口句柄
     HWND hwnd = GetHWnd();
     //把黑色的背景设置为透明
-   SetLayeredWindowAttributes(hwnd, RGB(0, 0, 0), 150, LWA_ALPHA);
+    SetLayeredWindowAttributes(hwnd, RGB(0, 0, 0), 150, LWA_ALPHA);
 }
 
 /*VIP判断*/

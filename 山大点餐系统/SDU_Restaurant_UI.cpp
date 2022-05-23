@@ -222,9 +222,6 @@ void Waiter_Food_Show(void)
                 }
                 else
                 {
-                    puts(pr->data.address);
-                    system("pause");
-
                     loadimage(&picture, pr->data.address, 640, 480);
                     initgraph(640, 480);
                     putimage(0, 0, &picture);
@@ -488,6 +485,7 @@ void Admin_Waiter_Change(void)
         printf("  输 入 \"add [工 号] [姓 名] [图 片 地 址]\" 添 加 员 工）\n\n");
         printf("  初 始 化 密 码  为 123456，初 始 化 盈 利 为 0  \n\n  若 暂 无 图 片 则 请 输 入 \"EMPTY_ADRESS\"\n\n");
         printf("  输 入 \"del [工 号]\" 删 除 员 工\n\n");
+        printf("  输 入 \"chek [工 号]\" 查 看 图 片\n\n");
         printf("  输 入 \"quit\" 返 回 上 一 级 菜 单\n\n");
         printf("   $ admin > ");
         char cmd[30] = { 0 };
@@ -536,6 +534,43 @@ void Admin_Waiter_Change(void)
             }
             Order_By_ID(SDU_Restaurant.current_waiters);
             clearScreenBuffer(); //若del 后仍有内容则略去
+        }
+        else if (strcmp(cmd, "chek") == 0)
+        {
+            IMAGE picture;
+            NODE_W* pr = NULL;
+            char id[WAITERID_LENGTH_MAX];
+            scanf_s(" %s", id, sizeof(id));
+            clearScreenBuffer();
+            for (pr = SDU_Restaurant.current_waiters; !(pr == NULL); pr = pr->next)
+            {
+                if (0 == strcmp(id, pr->data.id))
+                {
+                    if (0 == strcmp(EMPTY_ADDRESS, pr->data.waiter_address)) // EMPTY_ADRESS标识无图片菜品
+                    {
+                        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 12); //恢复白色
+                        printf("\n  该 员 工 暂 无 图 片！");
+                        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7); //恢复白色
+                        SDU_Restaurant_Sleep(1200);
+                    }
+                    else
+                    {
+                        loadimage(&picture, pr->data.waiter_address, 640, 480);
+                        initgraph(640, 480);
+                        putimage(0, 0, &picture);
+                        char GET_CHAR = getchar();
+                        closegraph();
+                    }
+                    break;
+                }
+            }
+            if (pr == NULL)
+            {
+                SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 12); //淡红色
+                printf("\n  错 误 的 员 工 序 号！");
+                SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7); //恢复白色
+                SDU_Restaurant_Sleep(1200);
+            }
         }
         else if (strcmp(cmd, "quit") == 0)
             break;
