@@ -316,7 +316,7 @@ void Print_LinkTable(NODE_F* pHead_f)
     if (0 == SDU_Restaurant.foodsCount)
         return;
     for (pr = pHead_f; !(pr == NULL); pr = pr->next)
-        printf("      %02d\t\t  %-15s\t %-3.2lf元\n", pr->data.id, pr->data.name, pr->data.price);
+        printf("      %02d\t\t%-8s\t       %6.2lf元\n", pr->data.id, pr->data.name, pr->data.price);
 }
 
 void Show_LinkTable(NODE_F* pHead_f)
@@ -325,7 +325,7 @@ void Show_LinkTable(NODE_F* pHead_f)
     if (0 == SDU_Restaurant.foodsCount)
         return;
     for (pr = pHead_f; !(pr == NULL); pr = pr->next)
-        printf("      %02d\t %-15s\t %-3.2lf元\t%2d\n", pr->data.id, pr->data.name, pr->data.price,pr->data.orderCount);
+        printf("      %02d\t %-8s\t %6.2lf元\t%2d\n", pr->data.id, pr->data.name, pr->data.price,pr->data.orderCount);
 }
 
 /*遍历输出服务员链表信息*/
@@ -335,7 +335,7 @@ void Print_LinkTable(NODE_W* pHead_w)
     if (0 == SDU_Restaurant.waitersCount)
         return;
     for (pr = pHead_w; !(pr == NULL); pr = pr->next)
-        printf("    %s\t\t %-15s\t %-3.2f元\n", pr->data.id, pr->data.waiterNick, pr->data.profit);
+        printf("    %s\t\t %-15s\t %6.2f元\n", pr->data.id, pr->data.waiterNick, pr->data.profit);
     printf("\n");
 }
 
@@ -368,7 +368,7 @@ void Print_LinkTable(NODE_V* pHead_v)
     if (0 == SDU_Restaurant.dateCount)
         return;
     for (pr = pHead_v; !(pr == NULL); pr = pr->next)
-        printf("    %06d\t        %lld\t\t %.2f\n", pr->data.cardnum, pr->data.phonenum,pr->data.money);
+        printf("    %06d\t       %lld\t   %.2f\n", pr->data.cardnum, pr->data.phonenum,pr->data.money);
     printf("\n");
 }
 

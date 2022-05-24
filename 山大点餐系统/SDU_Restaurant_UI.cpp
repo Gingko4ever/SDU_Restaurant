@@ -309,12 +309,12 @@ void Waiter_Food_Check(void)
             SDU_Restaurant_Sleep(1000);
             return;
         }
-        NODE_C* pr = SDU_Restaurant.current_customer;
+       NODE_C* pr = SDU_Restaurant.current_customer;
         for (; pr != NULL; pr = pr->next)
         {
             if (seat == pr->data.Seatnum)
                 break;
-        }
+        } 
         if (pr == NULL)
         {
             printf("\t该 座 位 暂 无 顾 客！\n\n");
@@ -593,7 +593,7 @@ void Admin_VIP_Change(void)
         system("cls");
         printf("\n\n\n");
         printf(" -------- 欢 迎 使 用 山 大 餐 饮 管 理 员 系 统 ---------\n\n\n");
-        printf("     卡 号\t\t   电 话\t\t\t余 额\n");
+        printf("     卡 号\t\t电 话\t\t  余 额\n");
         printf(" ==========================================================\n\n");
         Print_LinkTable(SDU_Restaurant.current_vip);
         printf(" ==========================================================\n\n");
@@ -828,7 +828,7 @@ void Print_Daily_Profit(NODE_D* pHead_d)
     if (0 == SDU_Restaurant.dateCount)
         return;
     for (pr = pHead_d; !(pr == NULL); pr = pr->next)
-        printf("       \t%04d / %02d / %02d\t\t      %5.2f 元\n", pr->data.year, pr->data.month, pr->data.day, pr->data.profit);
+        printf("       \t%04d / %02d / %02d\t\t      %10.2f 元\n", pr->data.year, pr->data.month, pr->data.day, pr->data.profit);
 }
 
 /*展示当前座位情况*/
@@ -887,7 +887,7 @@ void Admin_Seat_Infom(void)
     int customer_count = 0;
     for (int i = 0; i < SEATINFO_HEIGHT; i++)
         for (int j = 0; j < SEATINFO_WIDTH; j++)
-            if (SDU_Restaurant.seatsMap[i][j].isSelected)
+            if (SDU_Restaurant.seatsMap[i][j].isSelected||SDU_Restaurant.seatsMap[i][j].isSeated)
                 customer_count++;
 
     printf("============================================================\n");
@@ -902,7 +902,7 @@ void Admin_Statistics_Analysis(void)
     system("cls");
     printf("\n\n\n");
     printf(" -------- 欢 迎 使 用 山 大 餐 饮 管 理 员 系 统 ---------\n\n");
-    printf("    序 号\t\t菜   名\t\t 单 价\t销量\n");
+    printf("    序 号\t  菜   名\t   单 价\t销量\n");
     printf("============================================================\n");
     Show_LinkTable(SDU_Restaurant.current_foods);
     printf("============================================================\n");

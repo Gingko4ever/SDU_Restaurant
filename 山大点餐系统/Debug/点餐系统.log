@@ -1,3 +1,3 @@
 ﻿  SDU_Restaurant_UI.cpp
-D:\vsstdio\VC\Auxiliary\VS\include\graphics.h(1,1): warning C4828: 文件包含在偏移 0x19d3 处开始的字符，该字符在当前源字符集中无效(代码页 936)。
-  点餐系统.vcxproj -> D:\qqdownload\山大点餐系统\山大点餐系统\Debug\点餐系统.exe
+D:\521\VC\Auxiliary\VS\include\graphics.h(1,1): warning C4828: 文件包含在偏移 0x19d3 处开始的字符，该字符在当前源字符集中无效(代码页 936)。
+  点餐系统.vcxproj -> C:\Users\谢凯歌\Desktop\山大点餐系统\Debug\点餐系统.exe
