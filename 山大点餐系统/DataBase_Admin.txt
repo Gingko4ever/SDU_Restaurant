@@ -1,1 +1,1 @@
-admin 1
+admin admin

@@ -4,3 +4,4 @@ D:\qqdownload\山大点餐系统 (1)\山大点餐系统\Debug\点餐系统.exe
 D:\学习资料\山大点餐系统\Debug\点餐系统.exe
 D:\qqdownload\山大点餐系统\山大点餐系统\Debug\点餐系统.exe
 C:\Users\谢凯歌\Desktop\山大点餐系统\Debug\点餐系统.exe
+D:\小组作业\SDU_Restaurant-main\SDU_Restaurant-main\山大点餐系统\Debug\点餐系统.exe

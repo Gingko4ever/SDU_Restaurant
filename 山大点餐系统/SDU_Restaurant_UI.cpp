@@ -326,6 +326,7 @@ void Waiter_Food_Check(void)
             if (pr->data.order.isDiscount == 0) {
                 double discount = Check_VIP();
                 pr->data.order.ExpensesToBePaid = discount * pr->data.order.ExpensesToBePaid;
+                if( discount == 0.9)
                 pr->data.order.isDiscount = 1;
             }
 
