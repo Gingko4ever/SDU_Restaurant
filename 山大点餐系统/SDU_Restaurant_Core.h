@@ -69,7 +69,7 @@ struct Order
     int foodCount; //µ±Ç°¶©µ¥µÄÊ³ÎïÊı
     struct food foods[ORDERFOODS_LENGTH_MAX];
     double ExpensesToBePaid; //µ±Ç°¶©µ¥Ó¦¸¶·ÑÓÃ
-    bool isDiscount;
+    int  isDiscount=0;
 };
 
 /*É½´ó²ÍÒûÏµÍ³Ö®ÓÃ»§ÀàĞÍ*/
@@ -102,7 +102,6 @@ struct VIP
 {
     int cardnum;
     long long int phonenum;                      
-    double money;
 };
 
 /*É½´ó²ÍÒûÏµÍ³Ö®²ËÆ·Á´±í*/
@@ -217,9 +216,9 @@ NODE_F* SDU_Delete_Food(NODE_F* pHead_f, int id); //¸ù¾İĞòºÅÖµ,É¾³ıÏàÓ¦µÄ²ËÆ·Êı¾
 
 NODE_F* Load_Food_Inform(struct food* foods, int num); //½«²ËÆ·Êı¾İ´ÓÊı×éÂ¼ÈëÁ´±í
 
-int Add_Food_To_Order(int foodID, struct Order* order); //°Ñ²ËÆ·Êı¾İÌí¼Óµ½¶©µ¥
+int Add_Food_To_Order(int foodID, struct Order* order,double discount); //°Ñ²ËÆ·Êı¾İÌí¼Óµ½¶©µ¥
 
-int Delet_Food_From_Order(int foodID, struct Order* order);//°Ñ´Ó¶©µ¥ÖĞÉ¾³ıÒÑ¶©²ËÆ·Êı¾İ
+int Delet_Food_From_Order(int foodID, struct Order* order,double discount);//°Ñ´Ó¶©µ¥ÖĞÉ¾³ıÒÑ¶©²ËÆ·Êı¾İ
 
 void Save_Food_Inform(void); //½«²ËÆ·ĞÅÏ¢´ÓÁ´±í×ª»¯ÎªÊı×é´æ´¢µ½ÎÄ¼ş
 

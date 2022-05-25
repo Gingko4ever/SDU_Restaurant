@@ -1,6 +1,7 @@
 #pragma warning(disable:6011)//警告C6011：取消对NULL指针的引用；已在Assert_Program(void* ptr)中进行判断
 #include "SDU_Restaurant_Core.h"
 #include "SDU_Restaurant_IO.h"
+#include "SDU_Restaurant_UI.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -368,7 +369,7 @@ void Print_LinkTable(NODE_V* pHead_v)
     if (0 == SDU_Restaurant.dateCount)
         return;
     for (pr = pHead_v; !(pr == NULL); pr = pr->next)
-        printf("    %06d\t       %lld\t   %.2f\n", pr->data.cardnum, pr->data.phonenum,pr->data.money);
+        printf("    \t%06d\t       %lld\t   \n", pr->data.cardnum, pr->data.phonenum);
     printf("\n");
 }
 
@@ -561,8 +562,28 @@ void SDU_Add_Date(NODE_D* pHead_d, struct Date& newDate)
 /*将新增VIP顾客添加到VIP链表*/
 void SDU_Add_VIP(NODE_V* pHead_v, struct VIP& newVIP)
 {
+    NODE_V* pNode = (NODE_V*)malloc(sizeof(NODE_V));
+    NODE_V* pr = NULL;
+
+    if (pNode != NULL)
+    {
+        pNode->data = newVIP;
+        pNode->next = NULL;
+    }
+    
+    for (pr = SDU_Restaurant.current_vip; !(pr == NULL); pr = pr->next) //避免菜品重复添加
+        if (pNode != NULL)
+        {
+            if (pNode->data.cardnum == pr->data.cardnum)
+            {
+                printf("            该 VIP 顾 客 已 添 加 过\n");
+                SDU_Restaurant_Sleep(1300);
+                return;
+            }
+        }
+
     SDU_Restaurant.current_vip = Add_To_Tail(pHead_v, newVIP);
-    SDU_Restaurant.vipsCount++;
+    SDU_Restaurant.waitersCount++;
 }
 
 /*————————存储操作————————*/
@@ -846,7 +867,7 @@ NODE_C* SDU_Delete_Customer(NODE_C* pHead_c, int seatnum)
 }
 
 /*在订单中，根据序号值, 删除相应的已订菜品数据*/
-int Delet_Food_From_Order(int foodID, struct Order* order)
+int Delet_Food_From_Order(int foodID, struct Order* order,double discount)
 {
     NODE_F* pHead_f = SDU_Restaurant.current_foods;
     NODE_F* pr;
@@ -869,7 +890,7 @@ int Delet_Food_From_Order(int foodID, struct Order* order)
             {
                 if (order->foods[i].id == foodID)
                 {
-                    order->ExpensesToBePaid -= order->foods[i].price;
+                    order->ExpensesToBePaid -= discount*order->foods[i].price;
 
                     for (int j = i; j < order->foodCount - 1; j++)
                         order->foods[j] = order->foods[j + 1];
@@ -877,7 +898,7 @@ int Delet_Food_From_Order(int foodID, struct Order* order)
                     break;
                 }
             }
-            int newSize = (order->foodCount - 1) * sizeof(struct food); //扩大订单空间，以能够继续容纳菜品信息
+            //int newSize = (order->foodCount - 1) * sizeof(struct food); //扩大订单空间，以能够继续容纳菜品信息
             // order->foods = (struct food*)realloc(order->foods, newSize);//避免返回NULL，可能导致内存泄漏 //用固定数组取代了
             Assert_Program(order->foods);
 
@@ -1100,7 +1121,7 @@ NODE_C* Order_By_Seatnum(NODE_C* pHead_c)
 /*————————添加操作————————*/
 
 /*将菜品信息添加到订单*/
-int Add_Food_To_Order(int foodID, struct Order* order)
+int Add_Food_To_Order(int foodID, struct Order* order,double discount)
 {
     NODE_F* pHead_f = SDU_Restaurant.current_foods;
     NODE_F* pr;
@@ -1114,7 +1135,7 @@ int Add_Food_To_Order(int foodID, struct Order* order)
             pr->data.orderCount++; //记录菜品历史销量
             Save_Food_Inform();
 
-            int newSize = (order->foodCount + 1) * sizeof(struct food); //扩大订单空间，以能够继续容纳菜品信息
+            //int newSize = (order->foodCount + 1) * sizeof(struct food); //扩大订单空间，以能够继续容纳菜品信息
 
             // order->foods = (struct food*)realloc(order->foods, newSize);//避免返回NULL，可能导致内存泄漏 //用固定数组取代了
             Assert_Program(order->foods);
@@ -1122,7 +1143,7 @@ int Add_Food_To_Order(int foodID, struct Order* order)
             /*更新订单*/
             order->foods[(order->foodCount + 1) - 1] = pr->data;
             order->foodCount++;
-            order->ExpensesToBePaid += pr->data.price;
+            order->ExpensesToBePaid += discount*pr->data.price;
             return 1;
         }
         pr = pr->next;

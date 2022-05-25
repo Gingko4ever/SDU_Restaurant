@@ -329,7 +329,7 @@ void Waiter_Food_Check(void)
                 if( discount == 0.9)
                 pr->data.order.isDiscount = 1;
             }
-
+            Save_Customer_Inform();
             while (1)
             {
                 system("cls");
@@ -594,11 +594,11 @@ void Admin_VIP_Change(void)
         system("cls");
         printf("\n\n\n");
         printf(" -------- 欢 迎 使 用 山 大 餐 饮 管 理 员 系 统 ---------\n\n\n");
-        printf("     卡 号\t\t电 话\t\t  余 额\n");
+        printf("     \t卡 号\t\t电 话\t\t  \n");
         printf(" ==========================================================\n\n");
         Print_LinkTable(SDU_Restaurant.current_vip);
         printf(" ==========================================================\n\n");
-        printf("  输 入 \"add [卡 号] [电 话] [余 额]\" 添 加 VIP 顾 客）\n\n");
+        printf("  输 入 \"add [卡 号] [电 话] \" 添 加 VIP 顾 客）\n\n");
         // printf("  初 始 化 密 码  为 123456，初 始 化 盈 利 为 0  \n\n  若 暂 无 图 片 则 请 输 入 \"EMPTY_ADRESS\"\n\n");
         printf("  输 入 \"del [卡 号]\" 删 除 VIP\n\n");
         printf("  输 入 \"quit\" 返 回 上 一 级 菜 单\n\n");
@@ -611,7 +611,7 @@ void Admin_VIP_Change(void)
             struct VIP newVIP;
             scanf_s(" %d", &newVIP.cardnum);
             scanf_s(" %lld", &newVIP.phonenum);
-            scanf_s(" %lf", &newVIP.money);
+          
             //更新菜品链表
             SDU_Add_VIP(SDU_Restaurant.current_vip, newVIP);
 
@@ -749,7 +749,7 @@ void Waiter_Food_Order(void)
             for (pr = SDU_Restaurant.current_customer; pr != NULL; pr = pr->next)
             {
                 if (pr->data.Seatnum == num) {
-                    pr->data.order.isDiscount = 0;
+                    //pr->data.order.isDiscount = 0;
                     break;
                 }
             }
@@ -796,7 +796,7 @@ void Waiter_Food_Order(void)
             }
             int foodID;
             printf("    请 输 入 菜 品 序 号: [ ]\b\b");
-            addResult = scanf_s("%d", &foodID);
+            addResult = scanf_s("%d", &foodID);//防止输入非数字
             clearScreenBuffer();
             system("cls");
             if (foodID == 0)
@@ -805,12 +805,12 @@ void Waiter_Food_Order(void)
             }
             else if (foodID > 0 && addResult)
             {
-                addResult = Add_Food_To_Order(foodID, &pr->data.order);
+                addResult = Add_Food_To_Order(foodID, &pr->data.order, pr->data.order.isDiscount == 1 ? 0.9 : 1);
             }
 
             else if (addResult)
             {
-                addResult = Delet_Food_From_Order(-foodID, &pr->data.order);
+                addResult = Delet_Food_From_Order(-foodID, &pr->data.order, pr->data.order.isDiscount == 1 ? 0.9 : 1);
             }
             Save_Customer_Inform();
         }

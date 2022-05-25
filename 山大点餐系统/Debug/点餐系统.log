@@ -1,1 +1,3 @@
-﻿  点餐系统.vcxproj -> D:\小组作业\SDU_Restaurant-main\SDU_Restaurant-main\山大点餐系统\Debug\点餐系统.exe
+﻿  SDU_Restaurant_Core.cpp
+D:\vsstdio\VC\Auxiliary\VS\include\graphics.h(1,1): warning C4828: 文件包含在偏移 0x19d3 处开始的字符，该字符在当前源字符集中无效(代码页 936)。
+  点餐系统.vcxproj -> D:\EDFE\SDU_Restaurant-main\SDU_Restaurant-main\山大点餐系统\Debug\点餐系统.exe
