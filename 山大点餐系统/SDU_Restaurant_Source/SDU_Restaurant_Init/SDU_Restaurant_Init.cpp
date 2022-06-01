@@ -13,6 +13,7 @@ void Create_DataBaseFiles(void)
     {
         for (col = 0; col < SEATINFO_WIDTH; col++)
         {
+
             SDU_Restaurant.seatsMap[row][col].isSelected = 0;
             SDU_Restaurant.seatsMap[row][col].row = row;
             SDU_Restaurant.seatsMap[row][col].col = col;
@@ -227,7 +228,7 @@ void SDU_Restaurant_Console_Init(void)
     int nWidth = GetWindowWidth(GetConsoleWindow());
     int nHeight = GetWindowHeight(GetConsoleWindow());
     MoveWindow(GetConsoleWindow(), 520, 100, nWidth, nHeight, TRUE);
-    SetConsoleTitle(TEXT("山 大 餐 饮 系 统"));
+    SetConsoleTitle(TEXT("山 大 餐 饮 系 统 初 始 化"));
     system("mode con cols=60 lines=35");
     //获取当前窗口句柄
     HWND hwnd = GetHWnd();

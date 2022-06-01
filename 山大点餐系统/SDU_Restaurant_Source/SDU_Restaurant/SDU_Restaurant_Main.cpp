@@ -15,7 +15,7 @@ int main(int argc, char const* argv[])
     while (1)
     {
         EXIT = false;
-        
+
         /*用户选择身份(管理员OR服务员)*/
         enum class UserType userType = SDU_Restaurant_Welcome();
 
@@ -41,13 +41,13 @@ int main(int argc, char const* argv[])
                 case 4: //更改服务员信息
                     Admin_Waiter_Change();
                     break;
-                case 5://更改VIP信息
+                case 5: //更改VIP信息
                     Admin_VIP_Change();
                     break;
                 case 6: //修改管理员密码
                     Admin_Passwd_Change();
                     break;
-                case 7:  //菜品销量分析.
+                case 7: //菜品销量分析.
                     Admin_Statistics_Analysis();
                     break;
                 case 8: //管理员账号登出

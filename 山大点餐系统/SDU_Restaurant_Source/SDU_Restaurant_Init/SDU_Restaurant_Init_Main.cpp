@@ -1,8 +1,8 @@
 #include"SDU_Restaurant_Init.h"
 #include<stdio.h>
 #include<windows.h>
-struct SDU_Restaurant_Data SDU_Restaurant;
 
+struct SDU_Restaurant_Data SDU_Restaurant;
 int main()
 {
 	SDU_Restaurant_Console_Init();

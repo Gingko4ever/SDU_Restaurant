@@ -100,6 +100,7 @@ struct Customer
 /*山大餐饮系统之VIP*/
 struct VIP
 {
+    char vipname[USERNICK_LENGTH_MAX];
     int cardnum;
     long long int phonenum;                      
 };
@@ -281,6 +282,9 @@ void Print_LinkTable(NODE_V* pHead_v); //打印VIP链表
 void SDU_Add_VIP(NODE_V* pHead_v, struct VIP& newVIP); //将新增服务员添加到VIP链表
 
 int Judge_VIP(long long int phonenum);//检测是否是VIP
+
+void Order_By_ID(NODE_V* pHead_v); //按cardnum从1开始递增排序
+
 
 /*功能性*/
 void SDU_Restaurant_Sleep(unsigned long Milliseconds); //程序休眠暂停指定毫秒时间

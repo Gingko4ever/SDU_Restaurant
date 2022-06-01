@@ -1,11 +1,11 @@
-#pragma warning(disable:6011)//警告C6011：取消对NULL指针的引用；已在Assert_Program(void* ptr)中进行判断
+#pragma warning(disable : 6011) //警告C6011：取消对NULL指针的引用；已在Assert_Program(void* ptr)中进行判断
 #include "SDU_Restaurant_Core.h"
 #include "SDU_Restaurant_IO.h"
 #include "SDU_Restaurant_UI.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <graphics.h>    
+#include <graphics.h>
 #include <windows.h>
 #include <time.h>
 extern struct SDU_Restaurant_Data SDU_Restaurant;
@@ -83,12 +83,13 @@ void SDU_Restaurant_Console_Init(void)
 }
 
 /*VIP判断*/
-int Judge_VIP( long long int phonenum)
+int Judge_VIP(long long int phonenum)
 {
     NODE_V* pr = SDU_Restaurant.current_vip;
     for (; pr != NULL; pr = pr->next)
     {
-        if (pr->data.phonenum == phonenum ) {
+        if (pr->data.phonenum == phonenum)
+        {
             return 1;
         }
     }
@@ -100,7 +101,7 @@ void Judge_Date(NODE_D* pHead_d)
     struct tm flag;
     time_t now;
     time(&now);
-    localtime_s(&flag,&now);
+    localtime_s(&flag, &now);
 
     if (pHead_d == NULL)
     {
@@ -140,7 +141,7 @@ void SDU_Restaurant_Init(int argc, char const* argv[])
 {
     SDU_Restaurant_Console_Init(); //初始化控制台窗口
 
-    //Create_DataBaseFiles(); //初始化数据文件，历史数据将被覆盖
+    // Create_DataBaseFiles(); //初始化数据文件，历史数据将被覆盖
 
     int num; // num作为循环利用变量，每次从文件中录入数值时，先重置为0，再随文件内容进行更新
 
@@ -199,14 +200,16 @@ NODE_F* Add_To_Tail(NODE_F* pHead_f, struct food Data)
     /*创建新的链表节点*/
     NODE_F* pNode = (NODE_F*)malloc(sizeof(NODE_F));
     Assert_Program(pNode);
-    if (pNode != NULL) {
+    if (pNode != NULL)
+    {
         pNode->data = Data;
         pNode->next = NULL;
     }
     /*若原链表为空*/
     if (pHead_f == NULL)
     {
-        if (pNode != NULL) {
+        if (pNode != NULL)
+        {
             pNode->next = pHead_f;
             pHead_f = pNode;
         }
@@ -326,7 +329,7 @@ void Show_LinkTable(NODE_F* pHead_f)
     if (0 == SDU_Restaurant.foodsCount)
         return;
     for (pr = pHead_f; !(pr == NULL); pr = pr->next)
-        printf("      %02d\t %-8s\t %6.2lf元\t%2d\n", pr->data.id, pr->data.name, pr->data.price,pr->data.orderCount);
+        printf("      %02d\t %-8s\t %6.2lf元\t%2d\n", pr->data.id, pr->data.name, pr->data.price, pr->data.orderCount);
 }
 
 /*遍历输出服务员链表信息*/
@@ -366,10 +369,10 @@ void Print_LinkTable(NODE_D* pHead_d)
 void Print_LinkTable(NODE_V* pHead_v)
 {
     NODE_V* pr = NULL;
-    if (0 == SDU_Restaurant.dateCount)
+    if (0 == SDU_Restaurant.vipsCount)
         return;
     for (pr = pHead_v; !(pr == NULL); pr = pr->next)
-        printf("    \t%06d\t       %lld\t   \n", pr->data.cardnum, pr->data.phonenum);
+        printf("    \t%06d\t       %lld\t   %s\n", pr->data.cardnum, pr->data.phonenum, pr->data.vipname);
     printf("\n");
 }
 
@@ -444,13 +447,11 @@ void SDU_Add_Food(NODE_F* pHead_f, struct food& newFood)
     if (pHead_f != NULL)
     {
         for (pr = SDU_Restaurant.current_foods; !(pr == NULL); pr = pr->next) //避免菜品重复添加
-            if (pNode != NULL) {
-                if (strcmp(pNode->data.name, pr->data.name) == 0)
-                {
-                    printf("  该 菜 品 已 添 加 过\n");
-                    SDU_Restaurant_Sleep(1300);
-                    return;
-                }
+            if (strcmp(pNode->data.name, pr->data.name) == 0)
+            {
+                printf("  该 菜 品 已 添 加 过\n");
+                SDU_Restaurant_Sleep(1300);
+                return;
             }
         for (pr = SDU_Restaurant.current_foods; !(pr == NULL); pr = pr->next)
             if (pr->next == NULL) //迭代到菜品链表尾部
@@ -463,11 +464,9 @@ void SDU_Add_Food(NODE_F* pHead_f, struct food& newFood)
     }
     else
     {
-        if (pNode != NULL) {
-            pNode->data.id = 1;
-            pNode->next = pHead_f;
-            pHead_f = pNode;
-        }
+        pNode->data.id = 1;
+        pNode->next = pHead_f;
+        pHead_f = pNode;
     }
     SDU_Restaurant.foodsCount++;
     SDU_Restaurant.current_foods = pHead_f;
@@ -488,7 +487,8 @@ void SDU_Add_Waiter(NODE_W* pHead_w, struct Waiter& newWaiter)
     {
 
         for (pr = SDU_Restaurant.current_waiters; !(pr == NULL); pr = pr->next) //避免菜品重复添加
-            if (pNode != NULL) {
+            if (pNode != NULL)
+            {
                 if (strcmp(pNode->data.id, pr->data.id) == 0)
                 {
                     printf("            该 工 号 已 添 加 过\n");
@@ -508,7 +508,8 @@ void SDU_Add_Waiter(NODE_W* pHead_w, struct Waiter& newWaiter)
     }
     else
     {
-        if (pNode != NULL) {
+        if (pNode != NULL)
+        {
             pNode->data.NO = 1;
             pNode->next = pHead_w;
             pHead_w = pNode;
@@ -543,7 +544,8 @@ void SDU_Add_Customer(NODE_C* pHead_c, struct Customer& newcustomers)
     }
     else
     {
-        if (pNode != NULL) {
+        if (pNode != NULL)
+        {
             pNode->next = pHead_c;
             pHead_c = pNode;
         }
@@ -564,17 +566,22 @@ void SDU_Add_VIP(NODE_V* pHead_v, struct VIP& newVIP)
 {
     NODE_V* pNode = (NODE_V*)malloc(sizeof(NODE_V));
     NODE_V* pr = NULL;
-
+    if (newVIP.phonenum == -1)
+    {
+        printf("            所 输 入 的 号 码 格 式 有 误\n");
+        SDU_Restaurant_Sleep(1300);
+        return;
+    }
     if (pNode != NULL)
     {
         pNode->data = newVIP;
         pNode->next = NULL;
     }
-    
+
     for (pr = SDU_Restaurant.current_vip; !(pr == NULL); pr = pr->next) //避免菜品重复添加
         if (pNode != NULL)
         {
-            if (pNode->data.cardnum == pr->data.cardnum)
+            if (pNode->data.phonenum == pr->data.phonenum)
             {
                 printf("            该 VIP 顾 客 已 添 加 过\n");
                 SDU_Restaurant_Sleep(1300);
@@ -583,7 +590,7 @@ void SDU_Add_VIP(NODE_V* pHead_v, struct VIP& newVIP)
         }
 
     SDU_Restaurant.current_vip = Add_To_Tail(pHead_v, newVIP);
-    SDU_Restaurant.waitersCount++;
+    SDU_Restaurant.vipsCount++;
 }
 
 /*————————存储操作————————*/
@@ -592,7 +599,8 @@ void SDU_Add_VIP(NODE_V* pHead_v, struct VIP& newVIP)
 void Save_Food_Inform(void)
 {
     struct food* foods = NULL;
-    if (SDU_Restaurant.foodsCount != 0) {
+    if (SDU_Restaurant.foodsCount != 0)
+    {
         foods = (struct food*)malloc(SDU_Restaurant.foodsCount * sizeof(struct food));
         Assert_Program(foods);
     }
@@ -613,7 +621,8 @@ void Save_Food_Inform(void)
 void Save_Waiter_Inform(void)
 {
     struct Waiter* waiters = NULL;
-    if (SDU_Restaurant.waitersCount != 0) {
+    if (SDU_Restaurant.waitersCount != 0)
+    {
         waiters = (struct Waiter*)malloc(SDU_Restaurant.waitersCount * sizeof(struct Waiter));
         Assert_Program(waiters);
     }
@@ -634,7 +643,8 @@ void Save_Waiter_Inform(void)
 void Save_Customer_Inform(void)
 {
     struct Customer* customers = NULL;
-    if (SDU_Restaurant.customerCount != 0) {
+    if (SDU_Restaurant.customerCount != 0)
+    {
         customers = (struct Customer*)malloc(SDU_Restaurant.customerCount * sizeof(struct Customer));
         Assert_Program(customers);
     }
@@ -658,7 +668,8 @@ void Save_Customer_Inform(void)
 void Save_Date_Inform(void)
 {
     struct Date* dates = NULL;
-    if (SDU_Restaurant.dateCount != 0) {
+    if (SDU_Restaurant.dateCount != 0)
+    {
         dates = (struct Date*)malloc(SDU_Restaurant.dateCount * sizeof(struct Date));
         Assert_Program(dates);
     }
@@ -666,21 +677,23 @@ void Save_Date_Inform(void)
         dates = NULL;
     NODE_D* pr = NULL;
     int i = 0;
-    if(SDU_Restaurant.current_date!=NULL)
-    for (pr = SDU_Restaurant.current_date; !(pr == NULL); pr = pr->next)
-    {
-        if (dates != NULL) {
-            dates[i] = pr->data;
-            i++;
+    if (SDU_Restaurant.current_date != NULL)
+        for (pr = SDU_Restaurant.current_date; !(pr == NULL); pr = pr->next)
+        {
+            if (dates != NULL)
+            {
+                dates[i] = pr->data;
+                i++;
+            }
         }
-    }
     Write_Date_Inform(dates, SDU_Restaurant.dateCount);
 }
 /*将VIP信息存储到文件*/
 void Save_VIP_Inform(void)
 {
     struct VIP* vips = NULL;
-    if (SDU_Restaurant.vipsCount != 0) {
+    if (SDU_Restaurant.vipsCount != 0)
+    {
         vips = (struct VIP*)malloc(SDU_Restaurant.vipsCount * sizeof(struct VIP));
         Assert_Program(vips);
     }
@@ -691,7 +704,8 @@ void Save_VIP_Inform(void)
     if (SDU_Restaurant.current_vip != NULL)
         for (pr = SDU_Restaurant.current_vip; !(pr == NULL); pr = pr->next)
         {
-            if (vips != NULL) {
+            if (vips != NULL)
+            {
                 vips[i] = pr->data;
                 i++;
             }
@@ -867,7 +881,7 @@ NODE_C* SDU_Delete_Customer(NODE_C* pHead_c, int seatnum)
 }
 
 /*在订单中，根据序号值, 删除相应的已订菜品数据*/
-int Delet_Food_From_Order(int foodID, struct Order* order,double discount)
+int Delet_Food_From_Order(int foodID, struct Order* order, double discount)
 {
     NODE_F* pHead_f = SDU_Restaurant.current_foods;
     NODE_F* pr;
@@ -878,8 +892,8 @@ int Delet_Food_From_Order(int foodID, struct Order* order,double discount)
     {
         if (foodID == pr->data.id) //找到对应菜品
         {
-             pr->data.orderCount--; //记录菜品历史销量
-             Save_Food_Inform();
+            pr->data.orderCount--; //记录菜品历史销量
+            Save_Food_Inform();
             if (order->foodCount == 0)
             {
                 printf("未进行点菜，无法删除！");
@@ -890,7 +904,7 @@ int Delet_Food_From_Order(int foodID, struct Order* order,double discount)
             {
                 if (order->foods[i].id == foodID)
                 {
-                    order->ExpensesToBePaid -= discount*order->foods[i].price;
+                    order->ExpensesToBePaid -= discount * order->foods[i].price;
 
                     for (int j = i; j < order->foodCount - 1; j++)
                         order->foods[j] = order->foods[j + 1];
@@ -898,8 +912,8 @@ int Delet_Food_From_Order(int foodID, struct Order* order,double discount)
                     break;
                 }
             }
-            //int newSize = (order->foodCount - 1) * sizeof(struct food); //扩大订单空间，以能够继续容纳菜品信息
-            // order->foods = (struct food*)realloc(order->foods, newSize);//避免返回NULL，可能导致内存泄漏 //用固定数组取代了
+            // int newSize = (order->foodCount - 1) * sizeof(struct food); //扩大订单空间，以能够继续容纳菜品信息
+            //  order->foods = (struct food*)realloc(order->foods, newSize);//避免返回NULL，可能导致内存泄漏 //用固定数组取代了
             Assert_Program(order->foods);
 
             return 1;
@@ -978,6 +992,17 @@ void Order_By_ID(NODE_F* pHead_f)
     }
 }
 
+/*使VIP链表的序号刷新为有序化，根据新增时间顺序排序*/
+void Order_By_ID(NODE_V* pHead_v)
+{
+    NODE_V* pr = pHead_v;
+    int idx = 1;
+    while (pr != NULL)
+    {
+        pr->data.cardnum = idx++;
+        pr = pr->next;
+    }
+}
 /*使服务员链表的序号刷新为有序化，根据新增时间顺序排序*/
 void Order_By_ID(NODE_W* pHead_w)
 {
@@ -1121,7 +1146,7 @@ NODE_C* Order_By_Seatnum(NODE_C* pHead_c)
 /*————————添加操作————————*/
 
 /*将菜品信息添加到订单*/
-int Add_Food_To_Order(int foodID, struct Order* order,double discount)
+int Add_Food_To_Order(int foodID, struct Order* order, double discount)
 {
     NODE_F* pHead_f = SDU_Restaurant.current_foods;
     NODE_F* pr;
@@ -1135,7 +1160,7 @@ int Add_Food_To_Order(int foodID, struct Order* order,double discount)
             pr->data.orderCount++; //记录菜品历史销量
             Save_Food_Inform();
 
-            //int newSize = (order->foodCount + 1) * sizeof(struct food); //扩大订单空间，以能够继续容纳菜品信息
+            // int newSize = (order->foodCount + 1) * sizeof(struct food); //扩大订单空间，以能够继续容纳菜品信息
 
             // order->foods = (struct food*)realloc(order->foods, newSize);//避免返回NULL，可能导致内存泄漏 //用固定数组取代了
             Assert_Program(order->foods);
@@ -1143,7 +1168,7 @@ int Add_Food_To_Order(int foodID, struct Order* order,double discount)
             /*更新订单*/
             order->foods[(order->foodCount + 1) - 1] = pr->data;
             order->foodCount++;
-            order->ExpensesToBePaid += discount*pr->data.price;
+            order->ExpensesToBePaid += discount * pr->data.price;
             return 1;
         }
         pr = pr->next;
@@ -1157,14 +1182,16 @@ NODE_C* Add_To_Tail(NODE_C* pHead_c, struct Customer Data)
     /*创建新的链表节点*/
     NODE_C* pNode = (NODE_C*)malloc(sizeof(NODE_C));
     Assert_Program(pNode);
-    if (pNode != NULL) {
+    if (pNode != NULL)
+    {
         pNode->data = Data;
         pNode->next = NULL;
     }
     /*若原链表为空*/
     if (pHead_c == NULL)
     {
-        if (pNode != NULL) {
+        if (pNode != NULL)
+        {
             pNode->next = pHead_c;
             pHead_c = pNode;
         }
@@ -1184,19 +1211,20 @@ NODE_C* Add_To_Tail(NODE_C* pHead_c, struct Customer Data)
     return pHead_c;
 }
 
-
 /*将VIP数据添加到顾客链表尾部*/
 NODE_V* Add_To_Tail(NODE_V* pHead_v, struct VIP Data)
 {
     /*创建新的链表节点*/
     NODE_V* pNode = (NODE_V*)malloc(sizeof(NODE_V));
     Assert_Program(pNode);
-        pNode->data = Data;
-        pNode->next = NULL;
+    pNode->data = Data;
+    pNode->next = NULL;
     /*若原链表为空*/
     if (pHead_v == NULL)
     {
-        if (pNode != NULL) {
+        if (pNode != NULL)
+        {
+            pNode->data.cardnum = 1;
             pNode->next = pHead_v;
             pHead_v = pNode;
         }
@@ -1222,14 +1250,16 @@ NODE_D* Add_To_Tail(NODE_D* pHead_d, struct Date Data)
     /*创建新的链表节点*/
     NODE_D* pNode = (NODE_D*)malloc(sizeof(NODE_D));
     Assert_Program(pNode);
-    if (pNode != NULL) {
+    if (pNode != NULL)
+    {
         pNode->data = Data;
         pNode->next = NULL;
     }
     /*若原链表为空*/
     if (pHead_d == NULL)
     {
-        if (pNode != NULL) {
+        if (pNode != NULL)
+        {
             pNode->next = pHead_d;
             pHead_d = pNode;
         }

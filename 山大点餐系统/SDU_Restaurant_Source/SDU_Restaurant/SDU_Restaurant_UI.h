@@ -22,15 +22,15 @@ void Admin_Food_Change(void); //管理员更改餐品信息
 
 void Admin_Waiter_Change(void); //管理员更改服务员信息
 
-void Admin_Seat_Infom(void);//管理员展示座位情况
+void Admin_Seat_Infom(void); //管理员展示座位情况
 
-void Admin_Daily_Profit(void);//管理员展示每日利润
+void Admin_Daily_Profit(void); //管理员展示每日利润
 
-void Admin_Statistics_Analysis();//管理员展示菜品销量
+void Admin_Statistics_Analysis(); //管理员展示菜品销量
 
-void Admin_Passwd_Change();//管理员更改密码
+void Admin_Passwd_Change(); //管理员更改密码
 
-void Admin_VIP_Change(void);//管理员更改VIP信息
+void Admin_VIP_Change(void); //管理员更改VIP信息
 
 /*UI界面*/
 enum UserType SDU_Restaurant_Welcome(void); //用户类型选择页面

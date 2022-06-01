@@ -1,5 +1,0 @@
-﻿  SDU_Restaurant_Init.cpp
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\VS\include\graphics.h(1,1): warning C4828: 文件包含在偏移 0x19d3 处开始的字符，该字符在当前源字符集中无效(代码页 936)。
-  SDU_Restaurant_Init_Main.cpp
-  正在生成代码...
-  SDU_Restaurant_Init.vcxproj -> D:\小组作业\山大点餐系统\SDU_Restaurant_Source\SDU_Restaurant_Init\Debug\SDU_Restaurant_Init.exe

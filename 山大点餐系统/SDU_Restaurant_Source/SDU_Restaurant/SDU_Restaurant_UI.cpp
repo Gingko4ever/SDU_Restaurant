@@ -309,12 +309,12 @@ void Waiter_Food_Check(void)
             SDU_Restaurant_Sleep(1000);
             return;
         }
-       NODE_C* pr = SDU_Restaurant.current_customer;
+        NODE_C* pr = SDU_Restaurant.current_customer;
         for (; pr != NULL; pr = pr->next)
         {
             if (seat == pr->data.Seatnum)
                 break;
-        } 
+        }
         if (pr == NULL)
         {
             printf("\t该 座 位 暂 无 顾 客！\n\n");
@@ -323,11 +323,12 @@ void Waiter_Food_Check(void)
         }
         else
         {
-            if (pr->data.order.isDiscount == 0) {
+            if (pr->data.order.isDiscount == 0)
+            {
                 double discount = Check_VIP();
                 pr->data.order.ExpensesToBePaid = discount * pr->data.order.ExpensesToBePaid;
-                if( discount == 0.9)
-                pr->data.order.isDiscount = 1;
+                if (discount == 0.9)
+                    pr->data.order.isDiscount = 1;
             }
             Save_Customer_Inform();
             while (1)
@@ -336,10 +337,12 @@ void Waiter_Food_Check(void)
                 printf("\n\n\n");
                 printf(" -------- 欢 迎 使 用 山 大 餐 饮 服 务 员 系 统 ---------\n\n\n");
                 printf("\t顾 客 身 份：");
-                if (pr->data.order.isDiscount == 0) {
+                if (pr->data.order.isDiscount == 0)
+                {
                     printf("\t非 V I P 用 户\n\n");
                 }
-                else if (pr->data.order.isDiscount == 1) {
+                else if (pr->data.order.isDiscount == 1)
+                {
                     printf("\tV I P 用 户\n\n");
                 }
                 printf("\n\n\t需 收 款 金 额 为：");
@@ -594,11 +597,11 @@ void Admin_VIP_Change(void)
         system("cls");
         printf("\n\n\n");
         printf(" -------- 欢 迎 使 用 山 大 餐 饮 管 理 员 系 统 ---------\n\n\n");
-        printf("     \t卡 号\t\t电 话\t\t  \n");
+        printf("     \t卡 号\t\t电 话\t\t姓 名  \n");
         printf(" ==========================================================\n\n");
         Print_LinkTable(SDU_Restaurant.current_vip);
         printf(" ==========================================================\n\n");
-        printf("  输 入 \"add [卡 号] [电 话] \" 添 加 VIP 顾 客）\n\n");
+        printf("  输 入 \"add [姓 名] [电 话] \" 添 加 VIP 顾 客）\n\n");
         // printf("  初 始 化 密 码  为 123456，初 始 化 盈 利 为 0  \n\n  若 暂 无 图 片 则 请 输 入 \"EMPTY_ADRESS\"\n\n");
         printf("  输 入 \"del [卡 号]\" 删 除 VIP\n\n");
         printf("  输 入 \"quit\" 返 回 上 一 级 菜 单\n\n");
@@ -609,12 +612,13 @@ void Admin_VIP_Change(void)
         {
             //新增服务员信息
             struct VIP newVIP;
-            scanf_s(" %d", &newVIP.cardnum);
+            newVIP.phonenum = -1;
+            scanf_s(" %s", newVIP.vipname, USERNICK_LENGTH_MAX);
             scanf_s(" %lld", &newVIP.phonenum);
-          
+
             //更新菜品链表
             SDU_Add_VIP(SDU_Restaurant.current_vip, newVIP);
-
+            Order_By_ID(SDU_Restaurant.current_vip);
             //存储到文件
             Save_VIP_Inform();
             clearScreenBuffer(); //若add 后仍有内容则略去
@@ -748,8 +752,9 @@ void Waiter_Food_Order(void)
         {
             for (pr = SDU_Restaurant.current_customer; pr != NULL; pr = pr->next)
             {
-                if (pr->data.Seatnum == num) {
-                    //pr->data.order.isDiscount = 0;
+                if (pr->data.Seatnum == num)
+                {
+                    // pr->data.order.isDiscount = 0;
                     break;
                 }
             }
@@ -796,7 +801,7 @@ void Waiter_Food_Order(void)
             }
             int foodID;
             printf("    请 输 入 菜 品 序 号: [ ]\b\b");
-            addResult = scanf_s("%d", &foodID);//防止输入非数字
+            addResult = scanf_s("%d", &foodID); //防止输入非数字
             clearScreenBuffer();
             system("cls");
             if (foodID == 0)
@@ -888,7 +893,7 @@ void Admin_Seat_Infom(void)
     int customer_count = 0;
     for (int i = 0; i < SEATINFO_HEIGHT; i++)
         for (int j = 0; j < SEATINFO_WIDTH; j++)
-            if (SDU_Restaurant.seatsMap[i][j].isSelected||SDU_Restaurant.seatsMap[i][j].isSeated)
+            if (SDU_Restaurant.seatsMap[i][j].isSelected || SDU_Restaurant.seatsMap[i][j].isSeated)
                 customer_count++;
 
     printf("============================================================\n");
